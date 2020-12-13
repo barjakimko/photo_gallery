@@ -1,0 +1,59 @@
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Photographer </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link th:href="@{/styles.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/scripts.js}" defer></script>
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <span class="col-md-6">
+
+
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <th> User ID</th>
+                        <th> User Login</th>
+                        <th> User Password</th>
+                    </tr>
+                </thead>
+
+                <tr th:each="user : ${allUsers}">
+
+                        <span th:if="${user.accountType.id == 1}">
+
+                            <td> <div th:text="${user.id}"> </div> </td>
+                            <td> <div th:text="${user.login}"> </div> </td>
+                            <td> <div th:text="${user.password}"> </div> </td>
+                            <td><a th:href="@{/photographer/users/{id}(id=${user.id})}"
+                                   class="btn">Edit user Gallery</a></td>
+                        </span>
+                </tr>
+
+            </table>
+
+                <form id="add-user" action="#" th:action="@{/photographer/new-users}" th:object="${userDto}"
+                      method="post">
+                    <h2> Add new user </h2>
+
+                    <input type="text" name="new-login" th:field="*{login}" placeholder="Login">
+                    <input type="text" name="new-password" th:field="*{password}" placeholder="Password">
+
+
+                    <input type="button" th:onclick="addUser([[${logins}]])" name="Submit User" value="Submit user">
+
+                </form>
+
+        </span>
+    </div>
+    <div class="row">
+        <a class="btn btn-success" href="#" th:href="@{/logout}"> Logout </a>
+    </div>
+</div>
+</body>
+</html>
+

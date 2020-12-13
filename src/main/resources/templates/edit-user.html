@@ -1,0 +1,72 @@
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Edit user</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link th:href="@{/styles.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/scripts.js}" defer></script>
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <span class="col-md-6">
+
+            <h4> Login: <span th:text="${customer.login}"></span> </h4>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> Gallery name</th>
+                        <th> Button to view</th>
+                    </tr>
+                </thead>
+
+                <div th:switch="${customer.galleries.isEmpty()}">
+                    <h2 th:case="true">No galleries yet!</h2>
+
+                    <div th:case="*">
+                        <tr th:each="gallery : ${customer.galleries}">
+
+                            <td><span th:text="${gallery.name}"> </span></td>
+                            <td><a th:href="@{/galleries/{id}(id=${gallery.id})}" class="btn">Edit gallery</a></td>
+
+                        </tr>
+
+                        <tr th:each="photo : ${photos}">
+                            <td>
+                                <span th:if="${photo.id != null}">
+
+                                    <div class="photo">
+                                        <img th:src="@{${photo.url}}"/>
+                                    </div>
+                                        <img th:text="${photo.id}"/>
+
+                                </span>
+                            </td>
+                        </tr>
+                    </div>
+                </div>
+
+            </table>
+
+            <form id="add-gallery" name="add-gallery-form" th:action="@{/photographer/users/{id}(id=${customer.id})}"
+                  th:object="${galleryDto}" method="post">
+                    <h4> Add new gallery </h4>
+
+                    <input type="text" name="gallery-name" id="gallery-name" th:field="*{name}" placeholder="Name">
+                    <input type="text" name="gallery-password" id="gallery-password" th:field="*{password}"
+                           placeholder="Password">
+
+
+                    <input type="button" th:onclick="addGallery()" name="Submit Gallery" value="Add gallery">
+
+            </form>
+
+        </span>
+    </div>
+    <div class="row">
+        <a class="btn btn-success" href="#" th:href="@{/logout}"> Logout </a>
+    </div>
+</div>
+</body>
+</html>

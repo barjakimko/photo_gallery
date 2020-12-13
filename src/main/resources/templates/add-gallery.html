@@ -1,0 +1,58 @@
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Add gallery</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link th:href="@{/styles.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/scripts.js}" defer></script>
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <span class="col-md-6">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> Gallery name</th>
+                        <th> Button to view</th>
+                    </tr>
+                </thead>
+
+                <div th:switch="${customer.galleries.isEmpty()}">
+                    <h2 th:case="true">No galleries yet!</h2>
+
+                    <div th:case="*">
+                        <tr th:each="gallery : ${customer.galleries}">
+
+                            <td><span th:text="${gallery.name}"> </span></td>
+                            <td><a th:href="@{/galleries/{id}(id=${gallery.id})}" class="btn">View</a></td>
+
+                        </tr>
+
+                        <tr th:each="photo : ${photos}">
+                            <td>
+                                <span th:if="${photo.id != null}">
+
+                                    <div class="photo">
+                                        <img th:src="@{${photo.url}}"/>
+                                    </div>
+                                        <img th:text="${photo.url}"/>
+
+                                </span>
+                            </td>
+                        </tr>
+                    </div>
+                </div>
+
+            </table>
+
+
+        </span>
+    </div>
+    <div class="row">
+        <a class="btn btn-success" href="#" th:href="@{/logout}"> Logout </a>
+    </div>
+</div>
+</body>
+</html>
